@@ -8,6 +8,7 @@
   <title>Restaurant Menu</title>
   <link rel="stylesheet" href="{% static 'menu/css/style.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <script src="{% static 'menu/js/script.js' %}" defer></script>
 </head>
 
 <body>
@@ -21,13 +22,6 @@
         Order now and taste the difference that tradition makes.
       </p>
       <a href="{% url 'menu:order_page' %}" class="cta-button">Order Online</a>
-      
-<!-- <a href="{% url 'menu:order_page' %}" style="text-decoration: none; display: inline-block; margin-top: 20px;">
-  <button class="px-8 sm:px-12 md:px-16 py-3 sm:py-4 rounded-full text-lg sm:text-xl font-bold transition-all duration-300 transform hover:scale-105 uppercase tracking-wide shadow-2xl" 
-          style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: rgba(255, 255, 255, 0.3) 0px 10px 30px; font-family: 'Playfair Display', serif; cursor: pointer; border: none;">
-    ORDER NOW →
-  </button>
-</a> -->
 
     </div>
 
@@ -87,33 +81,3 @@
 </body>
 
 </html>
-
-
-
-<script>
-
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    modal.classList.remove('active');
-    // Only re-enable scroll if no other modals are active
-    if (!document.querySelector('.modal-overlay.active')) {
-      document.body.style.overflow = 'auto';
-    }
-  }
-
-  // Close on background click
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', function (e) {
-      if (e.target === this) {
-        closeModal(this.id);
-      }
-    });
-  });
-
-</script>
