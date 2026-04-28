@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Online - Gaavkari Misal</title>
+  <link rel="stylesheet" href="{% static 'menu/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'menu/css/order_page.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body style="background-color: #fcfaf7;">
+
+  <div class="order-selection-container">
+    <h1 class="order-title">Hungry?</h1>
+    <p class="order-subtitle">Choose your favorite platform to order from **Gaavkari Misal**</p>
+
+    <div class="button-stack">
+      <a href="#" target="_blank" class="partner-btn zomato-btn">
+        <span class="btn-label">ZOMATO</span>
+      </a>
+
+      <a href="#" target="_blank" class="partner-btn swiggy-btn">
+        <span class="btn-label">SWIGGY</span>
+      </a>
+    </div>
+
+    <a href="{% url 'menu:menu_list' %}" class="back-link">← Back to Menu</a>
+  </div>
+
+</body>
+</html>

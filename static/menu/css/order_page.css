@@ -1,0 +1,74 @@
+
+
+    .order-selection-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .order-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 10px;
+        color: var(--dark-bg);
+    }
+
+    .order-subtitle {
+        color: var(--text-light);
+        margin-bottom: 40px;
+        font-size: 1.1rem;
+    }
+
+    .button-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    /* Partner Button Styling */
+    .partner-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 15px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 700;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border: none;
+        color: white;
+    }
+
+    .partner-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    /* Brand Colors */
+    .zomato-btn {
+        background-color: #E23744; /* Official Zomato Red */
+    }
+
+    .swiggy-btn {
+        background-color: #FC8019; /* Official Swiggy Orange */
+    }
+
+    .btn-label {
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .back-link {
+        margin-top: 30px;
+        text-decoration: none;
+        color: var(--primary-gold);
+        font-weight: 600;
+    }

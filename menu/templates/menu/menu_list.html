@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Menu</title>
+  <link rel="stylesheet" href="{% static 'menu/css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="hero-subtitle">WHERE FLAVOR MEETS</span>
+      <h1 class="hero-title">Gaavkari Misal</h1>
+      <p class="hero-description">
+        Experience authentic Chinese and Pan-Asian flavors that have been perfected over 25 years.
+        Order now and taste the difference that tradition makes.
+      </p>
+      <a href="{% url 'menu:order_page' %}" class="cta-button">Order Online</a>
+      
+<!-- <a href="{% url 'menu:order_page' %}" style="text-decoration: none; display: inline-block; margin-top: 20px;">
+  <button class="px-8 sm:px-12 md:px-16 py-3 sm:py-4 rounded-full text-lg sm:text-xl font-bold transition-all duration-300 transform hover:scale-105 uppercase tracking-wide shadow-2xl" 
+          style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: rgba(255, 255, 255, 0.3) 0px 10px 30px; font-family: 'Playfair Display', serif; cursor: pointer; border: none;">
+    ORDER NOW →
+  </button>
+</a> -->
+
+    </div>
+
+    <div class="hero-stats">
+
+      <div class="stat-item">
+        <span class="stat-value">6</span>
+        <span class="stat-label">LOCATIONS ACROSS PUNE</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">25</span>
+        <span class="stat-label">YEARS OF TRADITION</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="main-header">
+    <h1>Our Menu</h1>
+  </div>
+
+  <div class="category-grid">
+    {% for category in categories %}
+    <section class="category-card" onclick="openModal('modal-{{ forloop.counter }}')">
+      <div class="card-header">
+        <h2>{{ category.name }}</h2>
+        <p class="tap-hint">Click to view items</p>
+      </div>
+    </section>
+    <div id="modal-{{ forloop.counter }}" class="modal-overlay">
+      <div class="modal-content">
+        <button class="close-btn"
+          onclick="event.stopPropagation(); closeModal('modal-{{ forloop.counter }}')">&times;</button>
+        <div class="modal-header">
+          <h2>{{ category.name }}</h2>
+        </div>
+        <div class="card-body">
+          {% for item in category.menuitem_set.all %}
+          <div class="menu-item">
+            {% if item.image %}
+            <div class="item-image-box">
+              <img src="{{ item.image.url }}" alt="{{ item.name }}">
+            </div>
+            {% endif %}
+
+            <div class="item-info">
+              <span>{{ item.name }}</span>
+              <span class="item-price">${{ item.price }}</span>
+            </div>
+            <p class="item-desc">{{ item.description }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+
+</html>
+
+
+
+<script>
+
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.remove('active');
+    // Only re-enable scroll if no other modals are active
+    if (!document.querySelector('.modal-overlay.active')) {
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  // Close on background click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function (e) {
+      if (e.target === this) {
+        closeModal(this.id);
+      }
+    });
+  });
+
+</script>
