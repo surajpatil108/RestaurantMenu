@@ -7,14 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurant Menu</title>
   <link rel="stylesheet" href="{% static 'menu/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'menu/css/brand.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <script src="{% static 'menu/js/script.js' %}" defer></script>
 </head>
 
-<body>
+<!-- <body> -->
+
+<body class="bg-slate-50 text-slate-900 selection:bg-indigo-100">
+
+<header class="header-section">
+    <a href="https://portfolio-jxhn.onrender.com/" class="brand-link"><span>SurajSinghWorks</span></a>
+</header>
 
   <section class="hero-section">
     <div class="hero-content">
+
       <span class="hero-subtitle">WHERE FLAVOR MEETS</span>
       <h1 class="hero-title">Gaavkari Misal</h1>
       <p class="hero-description">
