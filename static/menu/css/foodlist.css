@@ -1,0 +1,46 @@
+/* Container for each dish */
+.menu-item-container {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Flexbox for Image and Price Line */
+.item-main-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 8px; /* Space before description */
+}
+
+/* Image box size maintenance */
+.item-image-box {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Name and Price Line */
+.item-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1; /* Fills remaining space next to image */
+}
+
+/* Description styling */
+.item-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+    /* Optional: aligns text with the dish name on desktop */
+}
+
+@media (min-width: 600px) {
+    .item-details {
+        padding-left: 95px; /* Aligns description text under the Name (80px img + 15px gap) */
+    }
+}
