@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+# 2. Add this right after your BASE_DIR definition to be safe
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,19 +40,25 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
+# Change this for Render
+# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
+# Add your Render URL here
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'restaurantmenu-vkba.onrender.com/']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary_storage',       # Add this here (must be above staticfiles)
+    'django.contrib.staticfiles',
+    'cloudinary',                # Add this here
+    'menu',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'menu',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +74,17 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'restaurant_menu.urls'
 
+# Cloudinary Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# Tell Django to use Cloudinary for Media files
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Keep these for local reference, but Cloudinary handles the actual delivery now
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
@@ -97,7 +118,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
