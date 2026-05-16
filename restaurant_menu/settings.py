@@ -14,51 +14,45 @@ from pathlib import Path
 import os
 # 2. Add this right after your BASE_DIR definition to be safe
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-from dotenv import load_dotenv
-
-
 # Load .env file
 load_dotenv()
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['*']
-# Change this for Render
-# DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Add your Render URL here
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'restaurantmenu-vkba.onrender.com/']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'restaurantmenu-vkba.onrender.com']
 
-# Application definition
 
 INSTALLED_APPS = [
-    'cloudinary_storage',       # Add this here (must be above staticfiles)
-    'django.contrib.staticfiles',
-    'cloudinary',                # Add this here
-    'menu',
+    # Core Django System requirements must load first
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    
+    # Cloudinary storage engine wrapper handles things right here
+    'cloudinary_storage',       
+    'django.contrib.staticfiles',
+    'cloudinary',                
+    
+    # Custom local apps
+    'menu',
 ]
 
 MIDDLEWARE = [
@@ -74,15 +68,31 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'restaurant_menu.urls'
 
-# Cloudinary Configuration
+# 1. Read the full string from your environment
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+
+# If you have the long URL, you can just do this:
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 }
 
-# Tell Django to use Cloudinary for Media files
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# 3. Explicitly initialize the Cloudinary Python SDK fallback
+if CLOUDINARY_URL:
+    cloudinary.config(cloudinary_url=CLOUDINARY_URL)
+
+# Django 5.2 Storage Backend Setup Architecture 
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# # Tell Django to use Cloudinary for Media files
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Keep these for local reference, but Cloudinary handles the actual delivery now
 MEDIA_URL = "/media/"
@@ -107,7 +117,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'restaurant_menu.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
